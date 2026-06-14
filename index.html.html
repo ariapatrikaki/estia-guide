@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4A3C2A">
+  <meta name="description" content="A bilingual guest guide to ESTIA Stone House in Modi, Chania, Crete.">
+  <title>ESTIA Stone House — Guest Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --stone: #8b7355;
+      --stone-light: #c4a882;
+      --stone-dark: #4a3c2a;
+      --sea: #1b6b8a;
+      --sea-light: #5ba3bf;
+      --sea-pale: #e8f4f8;
+      --olive: #6b7c3a;
+      --olive-pale: #eff2e7;
+      --sand: #f5edd8;
+      --sand-dark: #e8d9b8;
+      --terracotta: #c4552a;
+      --white: #fefcf8;
+      --text: #3a3028;
+      --text-muted: #746759;
+      --shadow: 0 12px 35px rgba(74, 60, 42, 0.12);
+      --radius: 14px;
+      --radius-lg: 22px;
+      --page: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 116px; }
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--white);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.72;
+      overflow-x: hidden;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    img, svg { display: block; max-width: 100%; }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: -80px;
+      z-index: 1000;
+      background: var(--white);
+      color: var(--stone-dark);
+      padding: 10px 14px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .skip-link:focus { top: 12px; }
+
+    .hero {
+      min-height: 92svh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: max(5rem, env(safe-area-inset-top)) 1.25rem 4rem;
+      text-align: center;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(27,107,138,.14), transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(196,168,130,.22), transparent 38%),
+        var(--stone-dark);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .045;
+      background-image:
+        repeating-linear-gradient(45deg, var(--stone-light) 0 1px, transparent 1px 22px),
+        repeating-linear-gradient(-45deg, var(--stone-light) 0 1px, transparent 1px 22px);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .hero-eyebrow, .section-label {
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .hero-eyebrow { color: var(--stone-light); margin-bottom: 1.3rem; }
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3.2rem, 15vw, 6rem);
+      font-weight: 400;
+      line-height: .98;
+      color: var(--sand);
+      margin-bottom: .8rem;
+    }
+    .hero h1 em { color: var(--stone-light); font-weight: 400; }
+    .hero-place {
+      font-family: "Playfair Display", serif;
+      color: var(--stone-light);
+      font-size: clamp(1rem, 4vw, 1.35rem);
+      font-style: italic;
+      margin-bottom: 1.6rem;
+    }
+    .hero-tagline {
+      max-width: 560px;
+      margin: 0 auto 2.3rem;
+      color: rgba(245,237,216,.78);
+      font-size: clamp(.95rem, 3.8vw, 1.08rem);
+    }
+    .hero-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      padding: .72rem 1.15rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-size: .86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .button:active { transform: scale(.98); }
+    .button-primary { background: var(--sand); color: var(--stone-dark); }
+    .button-ghost { border-color: rgba(245,237,216,.35); color: var(--sand); background: transparent; }
+    .button-small { min-height: 42px; padding: .55rem .85rem; font-size: .78rem; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(42,32,24,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,168,130,.17);
+      padding-top: env(safe-area-inset-top);
+    }
+    .nav-top {
+      height: 58px;
+      max-width: var(--page);
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .nav-brand {
+      color: var(--sand);
+      font-family: "Playfair Display", serif;
+      font-size: 1rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .language-switch {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid rgba(196,168,130,.35);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+    }
+    .language-switch button {
+      min-width: 44px;
+      min-height: 38px;
+      padding: 0 .75rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(245,237,216,.7);
+      font: 600 .77rem "Inter", sans-serif;
+      cursor: pointer;
+    }
+    .language-switch button.active { background: var(--sand); color: var(--stone-dark); }
+    .nav-scroll {
+      max-width: var(--page);
+      margin: 0 auto;
+      display: flex;
+      gap: .25rem;
+      overflow-x: auto;
+      padding: 0 .75rem .65rem;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+    }
+    .nav-scroll::-webkit-scrollbar { display: none; }
+    .nav-scroll a {
+      flex: 0 0 auto;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      padding: .45rem .72rem;
+      color: rgba(245,237,216,.7);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-size: .67rem;
+      font-weight: 600;
+      border-radius: 999px;
+      scroll-snap-align: start;
+    }
+    .nav-scroll a:hover, .nav-scroll a:focus-visible { color: var(--sand); background: rgba(255,255,255,.06); }
+
+    section { padding: 4.7rem 1.15rem; }
+    .section-inner { max-width: var(--page); margin: 0 auto; }
+    .section-label { color: var(--terracotta); margin-bottom: .65rem; }
+    .section-title {
+      max-width: 800px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 8vw, 3.35rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--stone-dark);
+    }
+    .section-desc { max-width: 680px; margin-top: 1rem; color: var(--text-muted); }
+    .divider { width: 50px; height: 2px; margin: 1.15rem 0; background: var(--stone-light); }
+
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .prose p { color: var(--text-muted); margin-bottom: 1rem; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .8rem; }
+    .feature {
+      padding: 1rem;
+      background: var(--sand);
+      border: 1px solid var(--sand-dark);
+      border-radius: var(--radius);
+    }
+    .feature-icon { font-size: 1.35rem; margin-bottom: .35rem; }
+    .feature strong { display: block; color: var(--stone-dark); font-size: .9rem; }
+    .feature span { display: block; color: var(--text-muted); font-size: .77rem; margin-top: .15rem; }
+
+    .story-section { background: var(--sand); }
+    .story-layout {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .story-intro { position: sticky; top: 132px; }
+    .timeline { position: relative; padding-left: 1.6rem; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: .38rem;
+      top: .45rem;
+      bottom: .45rem;
+      width: 1px;
+      background: var(--stone-light);
+    }
+    .timeline-item { position: relative; padding: 0 0 2.2rem 1.1rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -1.58rem;
+      top: .35rem;
+      width: .82rem;
+      height: .82rem;
+      border: 3px solid var(--sand);
+      border-radius: 50%;
+      background: var(--terracotta);
+      box-shadow: 0 0 0 1px var(--terracotta);
+    }
+    .timeline-year { color: var(--terracotta); font-size: .73rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .timeline-title { font-family: "Playfair Display", serif; color: var(--stone-dark); font-size: 1.35rem; margin: .25rem 0 .45rem; }
+    .timeline-text { color: var(--text-muted); font-size: .94rem; }
+
+    .meaning-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+    }
+    .meaning-card {
+      padding: 1.5rem;
+      border: 1px solid var(--sand-dark);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+    }
+    .meaning-card.magic {
+      background:
+        radial-gradient(circle at 90% 10%, rgba(196,168,130,.18), transparent 35%),
+        var(--stone-dark);
+      border-color: var(--stone-dark);
+      color: var(--sand);
+    }
+    .meaning-symbol { font-size: 2rem; margin-bottom: .7rem; }
+    .meaning-card h3 { font-family: "Playfair Display", serif; font-size: 1.55rem; font-weight: 400; margin-bottom: .65rem; }
+    .meaning-card p { color: var(--text-muted); }
+    .meaning-card.magic p { color: rgba(245,237,216,.72); }
+    .initials {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: .45rem;
+      margin-top: 1rem;
+    }
+    .initial {
+      text-align: center;
+      padding: .7rem .3rem;
+      background: var(--sand);
+      border-radius: 10px;
+    }
+    .initial strong { display: block; color: var(--terracotta); font-family: "Playfair Display", serif; font-size: 1.25rem; }
+    .initial span { display: block; color: var(--text-muted); font-size: .65rem; overflow-wrap: anywhere; }
+
+    .family-panel {
+      margin-top: 1.2rem;
+      padding: 1.6rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.2rem;
+      align-items: start;
+      border-radius: var(--radius-lg);
+      background: var(--olive-pale);
+      border: 1px solid #dce3cd;
+    }
+    .family-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--olive);
+      color: white;
+      font-size: 1.45rem;
+    }
+    .family-panel h3 { font-family: "Playfair Display", serif; color: var(--stone-dark); font-size: 1.5rem; font-weight: 400; }
+    .family-panel p { color: var(--text-muted); margin-top: .5rem; }
+
+    .map-section { background: var(--sea-pale); }
+    .map-tabs {
+      display: flex;
+      gap: .55rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: .2rem 0 .9rem;
+      margin-top: 1.6rem;
+    }
+    .map-tabs::-webkit-scrollbar { display: none; }
+    .map-tab {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: .65rem 1rem;
+      border-radius: 999px;
+      border: 1px solid #c9dee7;
+      background: white;
+      color: var(--text-muted);
+      font: 600 .8rem "Inter", sans-serif;
+      cursor: pointer;
+    }
+    .map-tab.active { background: var(--stone-dark); border-color: var(--stone-dark); color: var(--sand); }
+    .map-layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 1rem; height: 560px; }
+    .map-list { overflow-y: auto; display: flex; flex-direction: column; gap: .65rem; padding-right: .2rem; }
+    .place-card {
+      width: 100%;
+      text-align: left;
+      padding: .95rem;
+      border-radius: var(--radius);
+      border: 1px solid #cfdee4;
+      background: white;
+      cursor: pointer;
+    }
+    .place-card.selected { border-color: var(--terracotta); box-shadow: 0 0 0 2px rgba(196,85,42,.12); }
+    .place-head { display: flex; gap: .65rem; align-items: flex-start; }
+    .place-dot { width: 10px; height: 10px; margin-top: .42rem; flex: 0 0 auto; border-radius: 50%; }
+    .place-name { flex: 1; color: var(--stone-dark); font-size: .88rem; font-weight: 600; line-height: 1.35; }
+    .place-distance { color: var(--stone); font-size: .72rem; white-space: nowrap; }
+    .place-desc { margin: .4rem 0 0 1.05rem; color: var(--text-muted); font-size: .75rem; line-height: 1.5; }
+    .place-actions { margin: .7rem 0 0 1.05rem; display: flex; gap: .45rem; }
+    .map-link {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      padding: .4rem .72rem;
+      border-radius: 999px;
+      background: var(--sea-pale);
+      color: var(--sea);
+      text-decoration: none;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+    #gmap { height: 100%; border: 1px solid #c9dee7; border-radius: var(--radius-lg); overflow: hidden; background: #dbe9ee; }
+
+    .recommendations { background: var(--white); }
+    .recommendation-group + .recommendation-group { margin-top: 4.5rem; }
+    .cards-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.8rem; }
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--sand-dark);
+      border-radius: var(--radius-lg);
+      background: white;
+      box-shadow: 0 2px 0 rgba(74,60,42,.02);
+    }
+    .card-bar { height: 5px; background: var(--stone); }
+    .card-body { display: flex; flex-direction: column; flex: 1; padding: 1.2rem; }
+    .card-kicker { color: var(--text-muted); font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .card-title { color: var(--stone-dark); font-size: 1rem; font-weight: 600; margin: .35rem 0 .5rem; }
+    .card-desc { color: var(--text-muted); font-size: .82rem; }
+    .card-tip { margin-top: .9rem; padding: .7rem .8rem; border-left: 3px solid var(--stone-light); border-radius: 0 8px 8px 0; background: var(--sand); color: var(--text-muted); font-size: .75rem; font-style: italic; }
+    .card-footer { margin-top: auto; padding-top: 1rem; }
+
+    .tips-section { background: var(--stone-dark); }
+    .tips-section .section-label { color: var(--stone-light); }
+    .tips-section .section-title { color: var(--sand); }
+    .tips-section .section-desc { color: rgba(245,237,216,.62); }
+    .tips-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .9rem; margin-top: 2rem; }
+    .tip-card { padding: 1.15rem; border: 1px solid rgba(196,168,130,.18); border-radius: var(--radius); background: rgba(245,237,216,.055); }
+    .tip-num { font-family: "Playfair Display", serif; font-size: 1.7rem; color: rgba(196,168,130,.3); }
+    .tip-title { color: var(--sand); font-size: .9rem; font-weight: 600; margin: .3rem 0; }
+    .tip-text { color: rgba(245,237,216,.58); font-size: .78rem; }
+
+    footer {
+      padding: 3rem 1.15rem calc(3rem + env(safe-area-inset-bottom));
+      text-align: center;
+      background: #251c16;
+      color: rgba(245,237,216,.55);
+    }
+    .footer-logo { font-family: "Playfair Display", serif; color: var(--sand); font-size: 1.55rem; }
+    .footer-place { margin-top: .35rem; font-size: .8rem; }
+    .footer-message { max-width: 600px; margin: 1.2rem auto 0; font-size: .8rem; }
+    .footer-note { max-width: 650px; margin: 1.4rem auto 0; font-size: .68rem; opacity: .7; }
+
+    @media (hover: hover) {
+      .button:hover { transform: translateY(-2px); }
+      .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease; }
+      .place-card:hover { border-color: var(--stone-light); }
+    }
+
+    @media (max-width: 900px) {
+      .welcome-grid, .story-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .story-intro { position: static; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .tips-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .map-layout { grid-template-columns: 300px 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      html { scroll-padding-top: 110px; }
+      body { font-size: 15px; }
+      section { padding: 3.8rem 1rem; }
+      .hero { min-height: 88svh; padding-left: 1rem; padding-right: 1rem; }
+      .hero h1 { font-size: clamp(3rem, 18vw, 4.5rem); }
+      .nav-top { height: 56px; }
+      .nav-brand { font-size: .92rem; }
+      .nav-scroll { padding-bottom: .55rem; }
+      .feature-grid, .meaning-grid, .cards-grid, .tips-grid { grid-template-columns: 1fr; }
+      .initials { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .family-panel { grid-template-columns: 1fr; }
+      .map-layout { grid-template-columns: 1fr; height: auto; }
+      .map-list {
+        order: 2;
+        height: auto;
+        max-height: none;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(260px, 82vw);
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: .2rem 0 .8rem;
+        scroll-snap-type: x mandatory;
+      }
+      .place-card { scroll-snap-align: start; }
+      #gmap { height: 330px; }
+      .recommendation-group + .recommendation-group { margin-top: 3.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <header class="hero" id="home">
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-i18n="heroEyebrow">Welcome to</p>
+      <h1>ESTIA<br><em>Stone House</em></h1>
+      <p class="hero-place">Modi · Chania · Crete</p>
+      <p class="hero-tagline" data-i18n="heroTagline">A restored stone home with the soul of an old olive mill — and our family’s local guide to Western Crete.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#welcome" data-i18n="explore">Explore the guide ↓</a>
+        <a class="button button-ghost" href="#story" data-i18n="readStory">Read our story</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-top">
+      <a class="nav-brand" href="#home">ESTIA · <span data-i18n="guide">Guest Guide</span></a>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" id="lang-en" aria-pressed="true">EN</button>
+        <button type="button" id="lang-el" aria-pressed="false">GR</button>
+      </div>
+    </div>
+    <div class="nav-scroll">
+      <a href="#welcome" data-i18n="navHouse">The House</a>
+      <a href="#story" data-i18n="navStory">Our Story</a>
+      <a href="#map" data-i18n="navMap">Map</a>
+      <a href="#food" data-i18n="navFood">Food</a>
+      <a href="#beaches" data-i18n="navBeaches">Beaches</a>
+      <a href="#sights" data-i18n="navSights">Sights</a>
+      <a href="#tips" data-i18n="navTips">Tips</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section id="welcome">
+      <div class="section-inner welcome-grid">
+        <div class="prose">
+          <p class="section-label" data-i18n="welcomeLabel">Your Cretan home</p>
+          <h2 class="section-title" data-i18n="welcomeTitle">Welcome to ESTIA</h2>
+          <div class="divider"></div>
+          <p data-i18n="welcomeP1">ESTIA Stone House is a traditional stone home in the peaceful village of Modi, a short drive from Chania and the beaches of the north coast.</p>
+          <p data-i18n="welcomeP2">Here, Cretan architecture meets modern comfort: old stone, warm wood, olive trees and the quiet rhythm of village life.</p>
+          <p data-i18n="welcomeP3">This guide gathers the places we genuinely enjoy — beaches, food, walks and small local experiences — so you can discover the area with the confidence of a local.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature"><div class="feature-icon">🚗</div><strong data-i18n="featureCity">Near Chania</strong><span data-i18n="featureCitySub">Old town, harbour and city life</span></div>
+          <div class="feature"><div class="feature-icon">🏖️</div><strong data-i18n="featureBeach">Near the sea</strong><span data-i18n="featureBeachSub">Platanias and nearby beaches</span></div>
+          <div class="feature"><div class="feature-icon">🫒</div><strong data-i18n="featureVillage">Village calm</strong><span data-i18n="featureVillageSub">Olive groves and authentic Crete</span></div>
+          <div class="feature"><div class="feature-icon">🏡</div><strong data-i18n="featureHistory">A house with history</strong><span data-i18n="featureHistorySub">Restored from a 1920s olive mill</span></div>
+          <div class="feature"><div class="feature-icon">⛰️</div><strong data-i18n="featureMountains">White Mountains</strong><span data-i18n="featureMountainsSub">Cretan landscapes all around</span></div>
+          <div class="feature"><div class="feature-icon">🤍</div><strong data-i18n="featureFamily">Made with love</strong><span data-i18n="featureFamilySub">A place shaped by family memory</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="story-section">
+      <div class="section-inner story-layout">
+        <div class="story-intro">
+          <p class="section-label" data-i18n="storyLabel">The building</p>
+          <h2 class="section-title" data-i18n="storyTitle">From olive mill to family home</h2>
+          <div class="divider"></div>
+          <p class="section-desc" data-i18n="storyDesc">The stones of ESTIA carry more than a century of work, abandonment, perseverance and renewal.</p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-year" data-i18n="timeline1Year">Around 1920</p>
+            <h3 class="timeline-title" data-i18n="timeline1Title">A small stone fabrika</h3>
+            <p class="timeline-text" data-i18n="timeline1Text">The building was created as a local olive mill. A millstone, press and clay jars filled the space, together with the unmistakable scent of freshly worked olives.</p>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-year" data-i18n="timeline2Year">For about fifty years</p>
+            <h3 class="timeline-title" data-i18n="timeline2Title">A place of work and village life</h3>
+            <p class="timeline-text" data-i18n="timeline2Text">Olive oil was produced here for local families. The building was not simply a workshop; it belonged to the everyday rhythm and memory of the area.</p>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-year" data-i18n="timeline3Year">Later years</p>
+            <h3 class="timeline-title" data-i18n="timeline3Title">Storage, abandonment and silence</h3>
+            <p class="timeline-text" data-i18n="timeline3Text">As production methods changed, the mill closed and became a storage building. Time took its toll: it deteriorated, was abandoned and came close to collapse. One of the few elements still standing was its small window — a quiet sign that the story was not over.</p>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-year" data-i18n="timeline4Year">Around 2007</p>
+            <h3 class="timeline-title" data-i18n="timeline4Title">The restoration begins</h3>
+            <p class="timeline-text" data-i18n="timeline4Text">The goal was not to erase the past, but to protect it. Old stones were reused, the original form was respected and changes were kept as limited as possible.</p>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-year" data-i18n="timeline5Year">Today</p>
+            <h3 class="timeline-title" data-i18n="timeline5Title">A new life as ESTIA Stone House</h3>
+            <p class="timeline-text" data-i18n="timeline5Text">The former olive mill now welcomes people as a home. Its function has changed, but its character, stones and connection to the village remain.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="meaning">
+      <div class="section-inner">
+        <p class="section-label" data-i18n="nameLabel">The name</p>
+        <h2 class="section-title" data-i18n="nameTitle">Why we called it “ESTIA”</h2>
+        <div class="divider"></div>
+        <p class="section-desc" data-i18n="nameDesc">Our father, Stelios, chose the name. It holds our family inside it, but it also carries one of the oldest and warmest ideas in Greek culture.</p>
+
+        <div class="meaning-grid">
+          <article class="meaning-card">
+            <div class="meaning-symbol">✦</div>
+            <h3 data-i18n="initialsTitle">Our family initials</h3>
+            <p data-i18n="initialsText">ESTIA brings together the names Stelios, Evgenia, Ioanna and Aria — the people whose memories and affection shaped the house.</p>
+            <div class="initials" aria-label="Family initials">
+              <div class="initial"><strong>S</strong><span>Stelios</span></div>
+              <div class="initial"><strong>E</strong><span>Evgenia</span></div>
+              <div class="initial"><strong>I</strong><span>Ioanna</span></div>
+              <div class="initial"><strong>A</strong><span>Aria</span></div>
+            </div>
+          </article>
+
+          <article class="meaning-card magic">
+            <div class="meaning-symbol">🔥</div>
+            <h3 data-i18n="hestiaTitle">A little Greek magic</h3>
+            <p data-i18n="hestiaText">In ancient Greek tradition, Hestia was the goddess of the hearth, home and family. The flame at the centre of the house symbolised warmth, protection, continuity and hospitality. That meaning feels perfectly at home here: an old working building, brought back to life as a place where people can gather, rest and feel welcome.</p>
+          </article>
+        </div>
+
+        <article class="family-panel">
+          <div class="family-icon">🌿</div>
+          <div>
+            <h3 data-i18n="familyTitle">Who we are</h3>
+            <p data-i18n="familyText1">We are a family deeply connected to Modi, its people and its memories. The house is tied to our childhood summers, to our father’s story and to our wish not to let a piece of our family and local history disappear.</p>
+            <p data-i18n="familyText2">More than anyone, our father Stelios stood behind this effort. Through persistence, personal work and love for the building, he gave life again to a place that once seemed lost. For us, ESTIA is more than accommodation — it is a family memory given shape again.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="map" class="map-section">
+      <div class="section-inner">
+        <p class="section-label" data-i18n="mapLabel">Explore</p>
+        <h2 class="section-title" data-i18n="mapTitle">Our local map</h2>
+        <div class="divider"></div>
+        <p class="section-desc" data-i18n="mapDesc">Tap a place to locate it on the map, or open it directly in Google Maps for directions.</p>
+        <div class="map-tabs" id="mapTabs"></div>
+        <div class="map-layout">
+          <div class="map-list" id="placeList" aria-live="polite"></div>
+          <div id="gmap" aria-label="Map of recommendations"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="recommendations">
+      <div class="section-inner">
+        <div class="recommendation-group" id="food">
+          <p class="section-label" data-i18n="foodLabel">Taste Crete</p>
+          <h2 class="section-title" data-i18n="foodTitle">Food & tavernas</h2>
+          <div class="divider"></div>
+          <p class="section-desc" data-i18n="foodDesc">From seafood by the water to relaxed Cretan cooking, these are good starting points for exploring the local food scene.</p>
+          <div class="cards-grid" id="foodCards"></div>
+        </div>
+
+        <div class="recommendation-group" id="beaches">
+          <p class="section-label" data-i18n="beachLabel">The sea</p>
+          <h2 class="section-title" data-i18n="beachTitle">Beaches of Western Crete</h2>
+          <div class="divider"></div>
+          <p class="section-desc" data-i18n="beachDesc">Choose an easy nearby swim or make a full-day trip to one of Crete’s famous lagoons.</p>
+          <div class="cards-grid" id="beachCards"></div>
+        </div>
+
+        <div class="recommendation-group" id="sights">
+          <p class="section-label" data-i18n="sightLabel">Culture & nature</p>
+          <h2 class="section-title" data-i18n="sightTitle">Places to explore</h2>
+          <div class="divider"></div>
+          <p class="section-desc" data-i18n="sightDesc">Old harbours, museums, monasteries and mountain landscapes reveal the many layers of Chania and Crete.</p>
+          <div class="cards-grid" id="sightCards"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tips" class="tips-section">
+      <div class="section-inner">
+        <p class="section-label" data-i18n="tipsLabel">Local knowledge</p>
+        <h2 class="section-title" data-i18n="tipsTitle">A few tips from us</h2>
+        <div class="divider"></div>
+        <p class="section-desc" data-i18n="tipsDesc">Small details that can make your days in Crete easier and more enjoyable.</p>
+        <div class="tips-grid" id="tipsGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-logo">ESTIA Stone House</div>
+    <p class="footer-place">Modi · Chania · Crete · Greece</p>
+    <p class="footer-message" data-i18n="footerMessage">Questions during your stay? Send us a message through Airbnb — we are happy to help.</p>
+    <p class="footer-note" data-i18n="footerNote">Travel times are approximate. Please verify opening hours, road conditions and access information before setting out.</p>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        skip: "Skip to content", heroEyebrow: "Welcome to", heroTagline: "A restored stone home with the soul of an old olive mill — and our family’s local guide to Western Crete.", explore: "Explore the guide ↓", readStory: "Read our story", guide: "Guest Guide",
+        navHouse: "The House", navStory: "Our Story", navMap: "Map", navFood: "Food", navBeaches: "Beaches", navSights: "Sights", navTips: "Tips",
+        welcomeLabel: "Your Cretan home", welcomeTitle: "Welcome to ESTIA", welcomeP1: "ESTIA Stone House is a traditional stone home in the peaceful village of Modi, a short drive from Chania and the beaches of the north coast.", welcomeP2: "Here, Cretan architecture meets modern comfort: old stone, warm wood, olive trees and the quiet rhythm of village life.", welcomeP3: "This guide gathers the places we genuinely enjoy — beaches, food, walks and small local experiences — so you can discover the area with the confidence of a local.",
+        featureCity: "Near Chania", featureCitySub: "Old town, harbour and city life", featureBeach: "Near the sea", featureBeachSub: "Platanias and nearby beaches", featureVillage: "Village calm", featureVillageSub: "Olive groves and authentic Crete", featureHistory: "A house with history", featureHistorySub: "Restored from a 1920s olive mill", featureMountains: "White Mountains", featureMountainsSub: "Cretan landscapes all around", featureFamily: "Made with love", featureFamilySub: "A place shaped by family memory",
+        storyLabel: "The building", storyTitle: "From olive mill to family home", storyDesc: "The stones of ESTIA carry more than a century of work, abandonment, perseverance and renewal.", timeline1Year: "Around 1920", timeline1Title: "A small stone fabrika", timeline1Text: "The building was created as a local olive mill. A millstone, press and clay jars filled the space, together with the unmistakable scent of freshly worked olives.", timeline2Year: "For about fifty years", timeline2Title: "A place of work and village life", timeline2Text: "Olive oil was produced here for local families. The building was not simply a workshop; it belonged to the everyday rhythm and memory of the area.", timeline3Year: "Later years", timeline3Title: "Storage, abandonment and silence", timeline3Text: "As production methods changed, the mill closed and became a storage building. Time took its toll: it deteriorated, was abandoned and came close to collapse. One of the few elements still standing was its small window — a quiet sign that the story was not over.", timeline4Year: "Around 2007", timeline4Title: "The restoration begins", timeline4Text: "The goal was not to erase the past, but to protect it. Old stones were reused, the original form was respected and changes were kept as limited as possible.", timeline5Year: "Today", timeline5Title: "A new life as ESTIA Stone House", timeline5Text: "The former olive mill now welcomes people as a home. Its function has changed, but its character, stones and connection to the village remain.",
+        nameLabel: "The name", nameTitle: "Why we called it “ESTIA”", nameDesc: "Our father, Stelios, chose the name. It holds our family inside it, but it also carries one of the oldest and warmest ideas in Greek culture.", initialsTitle: "Our family initials", initialsText: "ESTIA brings together the names Stelios, Evgenia, Ioanna and Aria — the people whose memories and affection shaped the house.", hestiaTitle: "A little Greek magic", hestiaText: "In ancient Greek tradition, Hestia was the goddess of the hearth, home and family. The flame at the centre of the house symbolised warmth, protection, continuity and hospitality. That meaning feels perfectly at home here: an old working building, brought back to life as a place where people can gather, rest and feel welcome.", familyTitle: "Who we are", familyText1: "We are a family deeply connected to Modi, its people and its memories. The house is tied to our childhood summers, to our father’s story and to our wish not to let a piece of our family and local history disappear.", familyText2: "More than anyone, our father Stelios stood behind this effort. Through persistence, personal work and love for the building, he gave life again to a place that once seemed lost. For us, ESTIA is more than accommodation — it is a family memory given shape again.",
+        mapLabel: "Explore", mapTitle: "Our local map", mapDesc: "Tap a place to locate it on the map, or open it directly in Google Maps for directions.", all: "All", restaurant: "Food", beach: "Beaches", sight: "Sights", openMaps: "Open in Maps", here: "You are here",
+        foodLabel: "Taste Crete", foodTitle: "Food & tavernas", foodDesc: "From seafood by the water to relaxed Cretan cooking, these are good starting points for exploring the local food scene.", beachLabel: "The sea", beachTitle: "Beaches of Western Crete", beachDesc: "Choose an easy nearby swim or make a full-day trip to one of Crete’s famous lagoons.", sightLabel: "Culture & nature", sightTitle: "Places to explore", sightDesc: "Old harbours, museums, monasteries and mountain landscapes reveal the many layers of Chania and Crete.",
+        tipsLabel: "Local knowledge", tipsTitle: "A few tips from us", tipsDesc: "Small details that can make your days in Crete easier and more enjoyable.", footerMessage: "Questions during your stay? Send us a message through Airbnb — we are happy to help.", footerNote: "Travel times are approximate. Please verify opening hours, road conditions and access information before setting out.",
+        categoryRestaurant: "Taverna", categoryBeach: "Beach", categorySight: "Sight", fromEstia: "from ESTIA"
+      },
+      el: {
+        skip: "Μετάβαση στο περιεχόμενο", heroEyebrow: "Καλώς ήρθατε στο", heroTagline: "Ένα αναπαλαιωμένο πέτρινο σπίτι με την ψυχή μιας παλιάς φάμπρικας — και ο οικογενειακός μας οδηγός για τη Δυτική Κρήτη.", explore: "Εξερευνήστε τον οδηγό ↓", readStory: "Διαβάστε την ιστορία μας", guide: "Οδηγός Επισκεπτών",
+        navHouse: "Το Σπίτι", navStory: "Η Ιστορία", navMap: "Χάρτης", navFood: "Φαγητό", navBeaches: "Παραλίες", navSights: "Αξιοθέατα", navTips: "Συμβουλές",
+        welcomeLabel: "Το κρητικό σας σπίτι", welcomeTitle: "Καλώς ήρθατε στην ESTIA", welcomeP1: "Το ESTIA Stone House είναι ένα παραδοσιακό πέτρινο σπίτι στο ήσυχο χωριό Μόδι, σε μικρή απόσταση με το αυτοκίνητο από τα Χανιά και τις παραλίες της βόρειας ακτής.", welcomeP2: "Εδώ, η κρητική αρχιτεκτονική συναντά τη σύγχρονη άνεση: παλιά πέτρα, ζεστό ξύλο, ελιές και ο ήρεμος ρυθμός της ζωής στο χωριό.", welcomeP3: "Σε αυτόν τον οδηγό συγκεντρώσαμε μέρη που αγαπάμε πραγματικά — παραλίες, φαγητό, βόλτες και μικρές τοπικές εμπειρίες — για να γνωρίσετε την περιοχή σαν ντόπιοι.",
+        featureCity: "Κοντά στα Χανιά", featureCitySub: "Παλιά πόλη, λιμάνι και ζωή στην πόλη", featureBeach: "Κοντά στη θάλασσα", featureBeachSub: "Πλατανιάς και κοντινές παραλίες", featureVillage: "Ηρεμία χωριού", featureVillageSub: "Ελαιώνες και αυθεντική Κρήτη", featureHistory: "Ένα σπίτι με ιστορία", featureHistorySub: "Αναπαλαιωμένο ελαιοτριβείο του 1920", featureMountains: "Λευκά Όρη", featureMountainsSub: "Κρητικά τοπία παντού γύρω", featureFamily: "Φτιαγμένο με αγάπη", featureFamilySub: "Ένας χώρος γεμάτος οικογενειακές μνήμες",
+        storyLabel: "Το κτίριο", storyTitle: "Από ελαιοτριβείο σε οικογενειακό σπίτι", storyDesc: "Οι πέτρες της ESTIA κουβαλούν περισσότερο από έναν αιώνα δουλειάς, εγκατάλειψης, επιμονής και αναγέννησης.", timeline1Year: "Γύρω στο 1920", timeline1Title: "Μια μικρή πέτρινη φάμπρικα", timeline1Text: "Το κτίριο δημιουργήθηκε ως μικρό τοπικό ελαιοτριβείο. Η μυλόπετρα, το πιεστήριο και τα πήλινα πιθάρια γέμιζαν τον χώρο, μαζί με τη χαρακτηριστική μυρωδιά της φρεσκοδουλεμένης ελιάς.", timeline2Year: "Για περίπου πενήντα χρόνια", timeline2Title: "Ένας τόπος δουλειάς και ζωής του χωριού", timeline2Text: "Εδώ παραγόταν ελαιόλαδο για τις οικογένειες της περιοχής. Το κτίριο δεν ήταν απλώς ένα εργαστήριο· αποτελούσε μέρος της καθημερινότητας και της μνήμης του τόπου.", timeline3Year: "Τα επόμενα χρόνια", timeline3Title: "Αποθήκη, εγκατάλειψη και σιωπή", timeline3Text: "Όταν άλλαξαν οι μέθοδοι παραγωγής, το ελαιοτριβείο σταμάτησε να λειτουργεί και χρησιμοποιήθηκε ως αποθήκη. Με τον χρόνο φθάρθηκε, εγκαταλείφθηκε και έφτασε κοντά στην κατάρρευση. Ένα από τα λίγα στοιχεία που έμειναν όρθια ήταν το μικρό του παράθυρο — ένα ήσυχο σημάδι ότι η ιστορία του δεν είχε τελειώσει.", timeline4Year: "Γύρω στο 2007", timeline4Title: "Αρχίζει η αποκατάσταση", timeline4Text: "Στόχος δεν ήταν να σβήσει το παρελθόν, αλλά να προστατευθεί. Οι παλιές πέτρες επαναχρησιμοποιήθηκαν, η αρχική μορφή σεβάστηκε και οι αλλαγές περιορίστηκαν όσο ήταν δυνατόν.", timeline5Year: "Σήμερα", timeline5Title: "Μια νέα ζωή ως ESTIA Stone House", timeline5Text: "Το παλιό ελαιοτριβείο υποδέχεται πλέον ανθρώπους ως σπίτι. Η χρήση του άλλαξε, όμως ο χαρακτήρας, οι πέτρες και ο δεσμός του με το χωριό παραμένουν.",
+        nameLabel: "Το όνομα", nameTitle: "Γιατί το ονομάσαμε «ESTIA»", nameDesc: "Το όνομα επιλέχθηκε από τον πατέρα μας, τον Στέλιο. Κλείνει μέσα του την οικογένειά μας, αλλά και μία από τις παλαιότερες και πιο ζεστές έννοιες του ελληνικού πολιτισμού.", initialsTitle: "Τα αρχικά της οικογένειάς μας", initialsText: "Το ESTIA ενώνει τα ονόματα Stelios, Evgenia, Ioanna και Aria — τους ανθρώπους των οποίων οι μνήμες και η αγάπη έδωσαν μορφή στο σπίτι.", hestiaTitle: "Λίγη ελληνική μαγεία", hestiaText: "Στην αρχαία ελληνική παράδοση, η Εστία ήταν η θεά της εστίας, του σπιτιού και της οικογένειας. Η φλόγα στο κέντρο του σπιτιού συμβόλιζε τη ζεστασιά, την προστασία, τη συνέχεια και τη φιλοξενία. Αυτή η έννοια ταιριάζει απόλυτα εδώ: ένα παλιό κτίριο εργασίας που ξαναζωντάνεψε ως χώρος συνάντησης, ξεκούρασης και καλωσορίσματος.", familyTitle: "Ποιοι είμαστε", familyText1: "Είμαστε μια οικογένεια βαθιά δεμένη με το Μόδι, τους ανθρώπους και τις μνήμες του. Το σπίτι συνδέεται με τα παιδικά μας καλοκαίρια, με την ιστορία του πατέρα μας και με την επιθυμία μας να μη χαθεί ένα κομμάτι της οικογενειακής και τοπικής μας ιστορίας.", familyText2: "Περισσότερο από όλους, πίσω από αυτή την προσπάθεια στάθηκε ο πατέρας μας, ο Στέλιος. Με επιμονή, προσωπική εργασία και αγάπη για το κτίριο, έδωσε ξανά ζωή σε έναν χώρο που κάποτε έμοιαζε χαμένος. Για εμάς, η ESTIA είναι κάτι περισσότερο από κατάλυμα — είναι μια οικογενειακή μνήμη που πήρε ξανά μορφή.",
+        mapLabel: "Εξερεύνηση", mapTitle: "Ο τοπικός μας χάρτης", mapDesc: "Πατήστε ένα μέρος για να το δείτε στον χάρτη ή ανοίξτε το απευθείας στους Χάρτες Google για οδηγίες.", all: "Όλα", restaurant: "Φαγητό", beach: "Παραλίες", sight: "Αξιοθέατα", openMaps: "Άνοιγμα στους Χάρτες", here: "Βρίσκεστε εδώ",
+        foodLabel: "Γεύσεις της Κρήτης", foodTitle: "Φαγητό & ταβέρνες", foodDesc: "Από θαλασσινά δίπλα στο κύμα μέχρι χαλαρή κρητική κουζίνα, αυτά τα μέρη είναι καλές αφετηρίες για να γνωρίσετε τις τοπικές γεύσεις.", beachLabel: "Η θάλασσα", beachTitle: "Παραλίες της Δυτικής Κρήτης", beachDesc: "Επιλέξτε μια εύκολη κοντινή βουτιά ή οργανώστε μια ολοήμερη εκδρομή σε μία από τις διάσημες λιμνοθάλασσες της Κρήτης.", sightLabel: "Πολιτισμός & φύση", sightTitle: "Μέρη για εξερεύνηση", sightDesc: "Παλιές πόλεις, μουσεία, μοναστήρια και ορεινά τοπία αποκαλύπτουν τις πολλές πλευρές των Χανίων και της Κρήτης.",
+        tipsLabel: "Τοπικές συμβουλές", tipsTitle: "Μερικά μυστικά από εμάς", tipsDesc: "Μικρές λεπτομέρειες που μπορούν να κάνουν τις ημέρες σας στην Κρήτη πιο εύκολες και ευχάριστες.", footerMessage: "Έχετε απορίες κατά τη διαμονή σας; Στείλτε μας μήνυμα μέσω Airbnb — θα χαρούμε να βοηθήσουμε.", footerNote: "Οι χρόνοι διαδρομής είναι ενδεικτικοί. Ελέγξτε ωράρια, οδικές συνθήκες και πληροφορίες πρόσβασης πριν ξεκινήσετε.",
+        categoryRestaurant: "Ταβέρνα", categoryBeach: "Παραλία", categorySight: "Αξιοθέατο", fromEstia: "από την ESTIA"
+      }
+    };
+
+    const places = [
+      { name: {en:"ESTIA Stone House",el:"ESTIA Stone House"}, type:"home", lat:35.5053, lng:23.8784, distance:{en:"Here",el:"Εδώ"}, desc:{en:"Your home in Crete",el:"Το σπίτι σας στην Κρήτη"}, color:"#c4552a" },
+      { name:{en:"Thalassino Ageri",el:"Thalassino Ageri"}, type:"restaurant", lat:35.5198, lng:24.0371, distance:{en:"about 35 min",el:"περίπου 35΄"}, desc:{en:"Seafood by the water in Tabakaria",el:"Θαλασσινά δίπλα στη θάλασσα στα Ταμπακαριά"}, tip:{en:"A lovely choice around sunset; booking ahead is sensible.",el:"Όμορφη επιλογή την ώρα του ηλιοβασιλέματος· καλό είναι να κάνετε κράτηση."}, color:"#c4552a" },
+      { name:{en:"Apostolis Taverna",el:"Ταβέρνα Αποστόλης"}, type:"restaurant", lat:35.5191, lng:24.023, distance:{en:"about 30 min",el:"περίπου 30΄"}, desc:{en:"Fish and Cretan dishes near the Venetian harbour",el:"Ψάρι και κρητικά πιάτα κοντά στο Ενετικό λιμάνι"}, tip:{en:"A relaxed option after a walk through the old town.",el:"Χαλαρή επιλογή μετά από μια βόλτα στην παλιά πόλη."}, color:"#c4552a" },
+      { name:{en:"To Maridaki",el:"Το Μαριδάκι"}, type:"restaurant", lat:35.5159, lng:24.0214, distance:{en:"about 30 min",el:"περίπου 30΄"}, desc:{en:"Casual seafood and local flavours in Chania",el:"Χαλαρό θαλασσινό φαγητό και τοπικές γεύσεις στα Χανιά"}, tip:{en:"Good for sharing several small dishes.",el:"Καλή επιλογή για να μοιραστείτε αρκετά μικρά πιάτα."}, color:"#c4552a" },
+      { name:{en:"Akrogiali",el:"Ακρογιάλι"}, type:"restaurant", lat:35.5144, lng:24.0076, distance:{en:"about 25 min",el:"περίπου 25΄"}, desc:{en:"Seafood on the Nea Chora waterfront",el:"Θαλασσινά στην παραλία της Νέας Χώρας"}, tip:{en:"Pairs well with a swim or seaside walk.",el:"Συνδυάζεται όμορφα με μπάνιο ή βόλτα δίπλα στη θάλασσα."}, color:"#c4552a" },
+      { name:{en:"Platanias Beach",el:"Παραλία Πλατανιά"}, type:"beach", lat:35.5194, lng:23.9056, distance:{en:"about 5 min",el:"περίπου 5΄"}, desc:{en:"The easiest nearby option for a swim",el:"Η πιο εύκολη κοντινή επιλογή για μπάνιο"}, tip:{en:"Convenient when you want an organised beach day close to home.",el:"Βολική όταν θέλετε οργανωμένη παραλία κοντά στο σπίτι."}, color:"#1b6b8a" },
+      { name:{en:"Agii Apostoli",el:"Άγιοι Απόστολοι"}, type:"beach", lat:35.5139, lng:23.9784, distance:{en:"about 15 min",el:"περίπου 15΄"}, desc:{en:"Sheltered coves, sand and pine trees",el:"Προστατευμένοι κολπίσκοι, άμμος και πεύκα"}, tip:{en:"A comfortable choice for families and calmer water.",el:"Άνετη επιλογή για οικογένειες και πιο ήρεμα νερά."}, color:"#1b6b8a" },
+      { name:{en:"Stavros Beach",el:"Παραλία Σταυρός"}, type:"beach", lat:35.5918, lng:24.095, distance:{en:"about 45 min",el:"περίπου 45΄"}, desc:{en:"A sheltered lagoon beneath a dramatic mountain",el:"Προστατευμένη λιμνοθάλασσα κάτω από εντυπωσιακό βουνό"}, tip:{en:"Arrive earlier on busy summer days.",el:"Πηγαίνετε νωρίτερα τις πολυσύχναστες καλοκαιρινές ημέρες."}, color:"#1b6b8a" },
+      { name:{en:"Seitan Limania",el:"Σεϊτάν Λιμάνια"}, type:"beach", lat:35.5518, lng:24.1934, distance:{en:"about 55 min",el:"περίπου 55΄"}, desc:{en:"A narrow turquoise cove reached by a steep path",el:"Στενός τιρκουάζ κολπίσκος με απότομο μονοπάτι πρόσβασης"}, tip:{en:"Wear proper shoes and avoid the descent in unsuitable conditions.",el:"Φορέστε κατάλληλα παπούτσια και αποφύγετε την κατάβαση σε ακατάλληλες συνθήκες."}, color:"#1b6b8a" },
+      { name:{en:"Falassarna",el:"Φαλάσαρνα"}, type:"beach", lat:35.492, lng:23.5807, distance:{en:"about 60–75 min",el:"περίπου 60–75΄"}, desc:{en:"A wide west-facing beach known for sunsets",el:"Μεγάλη δυτική παραλία γνωστή για τα ηλιοβασιλέματά της"}, tip:{en:"It is especially beautiful late in the day.",el:"Είναι ιδιαίτερα όμορφη προς το τέλος της ημέρας."}, color:"#1b6b8a" },
+      { name:{en:"Elafonissi",el:"Ελαφονήσι"}, type:"beach", lat:35.2712, lng:23.5413, distance:{en:"about 90 min",el:"περίπου 90΄"}, desc:{en:"Shallow turquoise water and pale pink sand",el:"Ρηχά τιρκουάζ νερά και απαλή ροζ άμμος"}, tip:{en:"A very early start makes the day more peaceful.",el:"Με πολύ πρωινή αναχώρηση η εμπειρία είναι πιο ήρεμη."}, color:"#1b6b8a" },
+      { name:{en:"Balos Lagoon",el:"Λιμνοθάλασσα Μπάλου"}, type:"beach", lat:35.5793, lng:23.5887, distance:{en:"full-day trip",el:"ολοήμερη εκδρομή"}, desc:{en:"A famous lagoon of white sand and turquoise water",el:"Διάσημη λιμνοθάλασσα με λευκή άμμο και τιρκουάζ νερά"}, tip:{en:"Choose between the boat and the road route after checking current access conditions.",el:"Επιλέξτε πλοίο ή οδική πρόσβαση αφού ελέγξετε τις τρέχουσες συνθήκες."}, color:"#1b6b8a" },
+      { name:{en:"Chania Venetian Harbour",el:"Ενετικό Λιμάνι Χανίων"}, type:"sight", lat:35.5172, lng:24.0176, distance:{en:"about 30 min",el:"περίπου 30΄"}, desc:{en:"The old harbour, lighthouse and historic lanes",el:"Το παλιό λιμάνι, ο φάρος και τα ιστορικά σοκάκια"}, tip:{en:"Wander beyond the waterfront into the smaller streets.",el:"Περιπλανηθείτε πέρα από την προκυμαία, στα μικρότερα σοκάκια."}, color:"#6b7c3a" },
+      { name:{en:"Samaria Gorge",el:"Φαράγγι Σαμαριάς"}, type:"sight", lat:35.2916, lng:23.9593, distance:{en:"full-day trip",el:"ολοήμερη εκδρομή"}, desc:{en:"A demanding but memorable mountain hike",el:"Απαιτητική αλλά αξέχαστη ορεινή πεζοπορία"}, tip:{en:"Plan transport and check that the gorge is open before leaving.",el:"Οργανώστε τη μεταφορά και ελέγξτε ότι το φαράγγι είναι ανοικτό πριν ξεκινήσετε."}, color:"#6b7c3a" },
+      { name:{en:"Archaeological Museum of Chania",el:"Αρχαιολογικό Μουσείο Χανίων"}, type:"sight", lat:35.5168, lng:24.0377, distance:{en:"about 35 min",el:"περίπου 35΄"}, desc:{en:"A modern museum presenting the long history of Chania",el:"Σύγχρονο μουσείο που παρουσιάζει τη μακρά ιστορία των Χανίων"}, tip:{en:"A strong choice for a hot or cloudy afternoon.",el:"Πολύ καλή επιλογή για ένα ζεστό ή συννεφιασμένο απόγευμα."}, color:"#6b7c3a" },
+      { name:{en:"Gouverneto Monastery",el:"Μονή Γουβερνέτου"}, type:"sight", lat:35.5844, lng:24.1402, distance:{en:"about 50 min",el:"περίπου 50΄"}, desc:{en:"Historic monastery and walking landscape in Akrotiri",el:"Ιστορικό μοναστήρι και τοπίο πεζοπορίας στο Ακρωτήρι"}, tip:{en:"Dress respectfully and check visiting hours before the drive.",el:"Ντυθείτε κατάλληλα και ελέγξτε το ωράριο επίσκεψης πριν ξεκινήσετε."}, color:"#6b7c3a" }
+    ];
+
+    const tips = [
+      {title:{en:"A car gives you freedom",el:"Το αυτοκίνητο σας δίνει ελευθερία"}, text:{en:"Many of Western Crete’s best beaches and villages are easiest to reach by car.",el:"Πολλές από τις ομορφότερες παραλίες και τα χωριά της Δυτικής Κρήτης προσεγγίζονται ευκολότερα με αυτοκίνητο."}},
+      {title:{en:"Start famous beach days early",el:"Ξεκινήστε νωρίς για τις διάσημες παραλίες"}, text:{en:"An early departure usually means easier parking, less heat and a calmer first swim.",el:"Η πρωινή αναχώρηση συνήθως σημαίνει ευκολότερο πάρκινγκ, λιγότερη ζέστη και πιο ήρεμη πρώτη βουτιά."}},
+      {title:{en:"Explore beyond the harbour front",el:"Εξερευνήστε πέρα από την προκυμαία"}, text:{en:"Some of Chania’s most atmospheric corners are hidden in the smaller streets of the old town.",el:"Μερικές από τις πιο όμορφες γωνιές των Χανίων κρύβονται στα μικρότερα σοκάκια της παλιάς πόλης."}},
+      {title:{en:"Taste local products",el:"Δοκιμάστε τοπικά προϊόντα"}, text:{en:"Look for Cretan olive oil, thyme honey, graviera cheese, rusks and seasonal produce.",el:"Αναζητήστε κρητικό ελαιόλαδο, θυμαρίσιο μέλι, γραβιέρα, παξιμάδια και εποχιακά προϊόντα."}},
+      {title:{en:"Respect the summer sun",el:"Σεβαστείτε τον καλοκαιρινό ήλιο"}, text:{en:"Carry water, use sun protection and avoid demanding hikes during the hottest hours.",el:"Έχετε μαζί σας νερό, χρησιμοποιείτε αντηλιακή προστασία και αποφύγετε απαιτητικές πεζοπορίες τις πιο ζεστές ώρες."}},
+      {title:{en:"Raki often means hospitality",el:"Η ρακή συχνά σημαίνει φιλοξενία"}, text:{en:"A small raki and sweet after a meal may be offered as a gesture of Cretan welcome.",el:"Ένα μικρό ποτήρι ρακή και γλυκό μετά το φαγητό συχνά προσφέρονται ως κρητικό καλωσόρισμα."}}
+    ];
+
+    let currentLang = "en";
+    let currentFilter = "all";
+    let map;
+    let markers = [];
+    let selectedPlaceIndex = -1;
+
+    const typeEmoji = {restaurant:"🍽️", beach:"🏖️", sight:"🏛️", home:"🏠"};
+
+    function t(key) { return translations[currentLang][key] || key; }
+    function localized(value) { return typeof value === "string" ? value : value[currentLang]; }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang === "el" ? "el" : "en";
+      document.title = lang === "el" ? "ESTIA Stone House — Οδηγός Επισκεπτών" : "ESTIA Stone House — Guest Guide";
+      document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+      document.getElementById("lang-en").classList.toggle("active", lang === "en");
+      document.getElementById("lang-el").classList.toggle("active", lang === "el");
+      document.getElementById("lang-en").setAttribute("aria-pressed", String(lang === "en"));
+      document.getElementById("lang-el").setAttribute("aria-pressed", String(lang === "el"));
+      try { localStorage.setItem("estia-language", lang); } catch (error) { /* Storage may be unavailable in some embedded browsers. */ }
+      renderTabs();
+      renderPlaceList();
+      renderRecommendationCards();
+      renderTips();
+      refreshMarkerTitles();
+    }
+
+    function renderTabs() {
+      const tabs = [
+        {key:"all", emoji:"📍"},
+        {key:"restaurant", emoji:"🍽️"},
+        {key:"beach", emoji:"🏖️"},
+        {key:"sight", emoji:"🏛️"}
+      ];
+      document.getElementById("mapTabs").innerHTML = tabs.map(tab => `
+        <button class="map-tab ${currentFilter === tab.key ? "active" : ""}" type="button" data-filter="${tab.key}">${tab.emoji} ${t(tab.key)}</button>
+      `).join("");
+      document.querySelectorAll(".map-tab").forEach(btn => btn.addEventListener("click", () => filterMap(btn.dataset.filter)));
+    }
+
+    function mapsUrl(place) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.lat + "," + place.lng)}`;
+    }
+
+    function visiblePlaces() {
+      return places.map((place,index) => ({place,index})).filter(({place}) => place.type !== "home" && (currentFilter === "all" || place.type === currentFilter));
+    }
+
+    function renderPlaceList() {
+      const list = document.getElementById("placeList");
+      list.innerHTML = visiblePlaces().map(({place,index}) => `
+        <article class="place-card ${selectedPlaceIndex === index ? "selected" : ""}" data-index="${index}" tabindex="0">
+          <div class="place-head">
+            <span class="place-dot" style="background:${place.color}"></span>
+            <span class="place-name">${localized(place.name)}</span>
+            <span class="place-distance">${localized(place.distance)}</span>
+          </div>
+          <p class="place-desc">${localized(place.desc)}</p>
+          <div class="place-actions">
+            <a class="map-link" href="${mapsUrl(place)}" target="_blank" rel="noopener" aria-label="${t("openMaps")}: ${localized(place.name)}">↗ ${t("openMaps")}</a>
+          </div>
+        </article>
+      `).join("");
+      list.querySelectorAll(".place-card").forEach(card => {
+        const select = () => selectPlace(Number(card.dataset.index));
+        card.addEventListener("click", e => { if (!e.target.closest("a")) select(); });
+        card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+      });
+    }
+
+    function categoryLabel(type) {
+      return type === "restaurant" ? t("categoryRestaurant") : type === "beach" ? t("categoryBeach") : t("categorySight");
+    }
+
+    function cardTemplate(place) {
+      return `
+        <article class="card">
+          <div class="card-bar" style="background:${place.color}"></div>
+          <div class="card-body">
+            <p class="card-kicker">${typeEmoji[place.type]} ${categoryLabel(place.type)} · ${localized(place.distance)} ${t("fromEstia")}</p>
+            <h3 class="card-title">${localized(place.name)}</h3>
+            <p class="card-desc">${localized(place.desc)}</p>
+            ${place.tip ? `<p class="card-tip">💡 ${localized(place.tip)}</p>` : ""}
+            <div class="card-footer"><a class="button button-small" style="background:var(--sand);color:var(--stone-dark)" href="${mapsUrl(place)}" target="_blank" rel="noopener">↗ ${t("openMaps")}</a></div>
+          </div>
+        </article>`;
+    }
+
+    function renderRecommendationCards() {
+      document.getElementById("foodCards").innerHTML = places.filter(p => p.type === "restaurant").map(cardTemplate).join("");
+      document.getElementById("beachCards").innerHTML = places.filter(p => p.type === "beach").map(cardTemplate).join("");
+      document.getElementById("sightCards").innerHTML = places.filter(p => p.type === "sight").map(cardTemplate).join("");
+    }
+
+    function renderTips() {
+      document.getElementById("tipsGrid").innerHTML = tips.map((tip,index) => `
+        <article class="tip-card">
+          <div class="tip-num">${String(index + 1).padStart(2,"0")}</div>
+          <h3 class="tip-title">${localized(tip.title)}</h3>
+          <p class="tip-text">${localized(tip.text)}</p>
+        </article>
+      `).join("");
+    }
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("gmap"), {
+        center: {lat:35.48, lng:23.85},
+        zoom:10,
+        mapTypeControl:false,
+        streetViewControl:false,
+        fullscreenControl:true,
+        gestureHandling:"cooperative",
+        styles:[
+          {featureType:"all",elementType:"geometry",stylers:[{saturation:-18}]},
+          {featureType:"water",elementType:"geometry",stylers:[{color:"#b8d8e8"}]},
+          {featureType:"poi",elementType:"labels",stylers:[{visibility:"off"}]},
+          {featureType:"road",elementType:"geometry",stylers:[{color:"#e8dcc8"}]},
+          {featureType:"landscape",elementType:"geometry",stylers:[{color:"#f0e8d0"}]}
+        ]
+      });
+      markers = places.map((place,index) => {
+        const marker = new google.maps.Marker({
+          position:{lat:place.lat,lng:place.lng},
+          map,
+          title:localized(place.name),
+          zIndex:place.type === "home" ? 20 : 1,
+          icon:{
+            path:google.maps.SymbolPath.CIRCLE,
+            scale:place.type === "home" ? 11 : 8,
+            fillColor:place.color,
+            fillOpacity:1,
+            strokeColor:"#ffffff",
+            strokeWeight:2
+          }
+        });
+        marker.addListener("click", () => place.type === "home" ? map.panTo(marker.getPosition()) : selectPlace(index));
+        return marker;
+      });
+      applyMarkerFilter();
+    }
+
+    function selectPlace(index) {
+      selectedPlaceIndex = index;
+      renderPlaceList();
+      if (map) {
+        map.panTo({lat:places[index].lat,lng:places[index].lng});
+        map.setZoom(13);
+      }
+      const selected = document.querySelector(`.place-card[data-index="${index}"]`);
+      if (selected) selected.scrollIntoView({behavior:"smooth",block:"nearest",inline:"nearest"});
+    }
+
+    function filterMap(filter) {
+      currentFilter = filter;
+      selectedPlaceIndex = -1;
+      renderTabs();
+      renderPlaceList();
+      applyMarkerFilter();
+      if (map) { map.setCenter({lat:35.48,lng:23.85}); map.setZoom(10); }
+    }
+
+    function applyMarkerFilter() {
+      if (!markers.length) return;
+      markers.forEach((marker,index) => {
+        const place = places[index];
+        marker.setVisible(place.type === "home" || currentFilter === "all" || place.type === currentFilter);
+      });
+    }
+
+    function refreshMarkerTitles() {
+      markers.forEach((marker,index) => marker.setTitle(localized(places[index].name)));
+    }
+
+    document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
+    document.getElementById("lang-el").addEventListener("click", () => setLanguage("el"));
+
+    let storedLanguage = null;
+    try { storedLanguage = localStorage.getItem("estia-language"); } catch (error) { /* Use browser language when storage is unavailable. */ }
+    const browserLanguage = navigator.language && navigator.language.toLowerCase().startsWith("el") ? "el" : "en";
+    setLanguage(storedLanguage === "el" || storedLanguage === "en" ? storedLanguage : browserLanguage);
+    window.initMap = initMap;
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZk7wrMGyEf4iePIDY1F0c_sNBi3VYgQc=initMap"></script>
+</body>
+</html>
