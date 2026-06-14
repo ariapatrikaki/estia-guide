@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
     :root {
       --stone: #8b7355;
@@ -386,6 +387,30 @@
       font-weight: 600;
     }
     #gmap { height: 100%; border: 1px solid #c9dee7; border-radius: var(--radius-lg); overflow: hidden; background: #dbe9ee; }
+    .estia-marker-wrapper { background: transparent !important; border: 0 !important; }
+    .estia-marker {
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: var(--marker-color);
+      box-shadow: 0 2px 8px rgba(42,32,24,.35);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .estia-marker.home { width: 26px; height: 26px; border-width: 3px; font-size: 13px; }
+    .leaflet-container { font-family: "Inter", sans-serif; color: var(--text); }
+    .leaflet-popup-content-wrapper { border-radius: 14px; box-shadow: var(--shadow); }
+    .leaflet-popup-content { margin: 12px 14px; min-width: 180px; line-height: 1.45; }
+    .leaflet-popup-content strong { display: block; color: var(--stone-dark); font-size: .86rem; margin-bottom: .25rem; }
+    .leaflet-popup-content span { color: var(--text-muted); font-size: .75rem; }
+    .leaflet-popup-content a { display: inline-flex; margin-top: .55rem; color: var(--sea); font-size: .74rem; font-weight: 600; text-decoration: none; }
+    .leaflet-control-attribution { font-size: 10px; }
+    .map-fallback { display: grid; place-items: center; height: 100%; padding: 2rem; text-align: center; color: var(--text-muted); background: var(--sea-pale); }
 
     .recommendations { background: var(--white); }
     .recommendation-group + .recommendation-group { margin-top: 4.5rem; }
@@ -677,6 +702,7 @@
     <p class="footer-note" data-i18n="footerNote">Travel times are approximate. Please verify opening hours, road conditions and access information before setting out.</p>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     const translations = {
       en: {
@@ -686,7 +712,7 @@
         featureCity: "Near Chania", featureCitySub: "Old town, harbour and city life", featureBeach: "Near the sea", featureBeachSub: "Platanias and nearby beaches", featureVillage: "Village calm", featureVillageSub: "Olive groves and authentic Crete", featureHistory: "A house with history", featureHistorySub: "Restored from a 1920s olive mill", featureMountains: "White Mountains", featureMountainsSub: "Cretan landscapes all around", featureFamily: "Made with love", featureFamilySub: "A place shaped by family memory",
         storyLabel: "The building", storyTitle: "From olive mill to family home", storyDesc: "The stones of ESTIA carry more than a century of work, abandonment, perseverance and renewal.", timeline1Year: "Around 1920", timeline1Title: "A small stone fabrika", timeline1Text: "The building was created as a local olive mill. A millstone, press and clay jars filled the space, together with the unmistakable scent of freshly worked olives.", timeline2Year: "For about fifty years", timeline2Title: "A place of work and village life", timeline2Text: "Olive oil was produced here for local families. The building was not simply a workshop; it belonged to the everyday rhythm and memory of the area.", timeline3Year: "Later years", timeline3Title: "Storage, abandonment and silence", timeline3Text: "As production methods changed, the mill closed and became a storage building. Time took its toll: it deteriorated, was abandoned and came close to collapse. One of the few elements still standing was its small window — a quiet sign that the story was not over.", timeline4Year: "Around 2007", timeline4Title: "The restoration begins", timeline4Text: "The goal was not to erase the past, but to protect it. Old stones were reused, the original form was respected and changes were kept as limited as possible.", timeline5Year: "Today", timeline5Title: "A new life as ESTIA Stone House", timeline5Text: "The former olive mill now welcomes people as a home. Its function has changed, but its character, stones and connection to the village remain.",
         nameLabel: "The name", nameTitle: "Why we called it “ESTIA”", nameDesc: "Our father, Stelios, chose the name. It holds our family inside it, but it also carries one of the oldest and warmest ideas in Greek culture.", initialsTitle: "Our family initials", initialsText: "ESTIA brings together the names Stelios, Evgenia, Ioanna and Aria — the people whose memories and affection shaped the house.", hestiaTitle: "A little Greek magic", hestiaText: "In ancient Greek tradition, Hestia was the goddess of the hearth, home and family. The flame at the centre of the house symbolised warmth, protection, continuity and hospitality. That meaning feels perfectly at home here: an old working building, brought back to life as a place where people can gather, rest and feel welcome.", familyTitle: "Who we are", familyText1: "We are a family deeply connected to Modi, its people and its memories. The house is tied to our childhood summers, to our father’s story and to our wish not to let a piece of our family and local history disappear.", familyText2: "More than anyone, our father Stelios stood behind this effort. Through persistence, personal work and love for the building, he gave life again to a place that once seemed lost. For us, ESTIA is more than accommodation — it is a family memory given shape again.",
-        mapLabel: "Explore", mapTitle: "Our local map", mapDesc: "Tap a place to locate it on the map, or open it directly in Google Maps for directions.", all: "All", restaurant: "Food", beach: "Beaches", sight: "Sights", openMaps: "Open in Maps", here: "You are here",
+        mapLabel: "Explore", mapTitle: "Our local map", mapDesc: "Tap a place to locate it on our OpenStreetMap map, or open it in Google Maps for directions.", all: "All", restaurant: "Food", beach: "Beaches", sight: "Sights", openMaps: "Open in Maps", here: "You are here",
         foodLabel: "Taste Crete", foodTitle: "Food & tavernas", foodDesc: "From seafood by the water to relaxed Cretan cooking, these are good starting points for exploring the local food scene.", beachLabel: "The sea", beachTitle: "Beaches of Western Crete", beachDesc: "Choose an easy nearby swim or make a full-day trip to one of Crete’s famous lagoons.", sightLabel: "Culture & nature", sightTitle: "Places to explore", sightDesc: "Old harbours, museums, monasteries and mountain landscapes reveal the many layers of Chania and Crete.",
         tipsLabel: "Local knowledge", tipsTitle: "A few tips from us", tipsDesc: "Small details that can make your days in Crete easier and more enjoyable.", footerMessage: "Questions during your stay? Send us a message through Airbnb — we are happy to help.", footerNote: "Travel times are approximate. Please verify opening hours, road conditions and access information before setting out.",
         categoryRestaurant: "Taverna", categoryBeach: "Beach", categorySight: "Sight", fromEstia: "from ESTIA"
@@ -698,7 +724,7 @@
         featureCity: "Κοντά στα Χανιά", featureCitySub: "Παλιά πόλη, λιμάνι και ζωή στην πόλη", featureBeach: "Κοντά στη θάλασσα", featureBeachSub: "Πλατανιάς και κοντινές παραλίες", featureVillage: "Ηρεμία χωριού", featureVillageSub: "Ελαιώνες και αυθεντική Κρήτη", featureHistory: "Ένα σπίτι με ιστορία", featureHistorySub: "Αναπαλαιωμένο ελαιοτριβείο του 1920", featureMountains: "Λευκά Όρη", featureMountainsSub: "Κρητικά τοπία παντού γύρω", featureFamily: "Φτιαγμένο με αγάπη", featureFamilySub: "Ένας χώρος γεμάτος οικογενειακές μνήμες",
         storyLabel: "Το κτίριο", storyTitle: "Από ελαιοτριβείο σε οικογενειακό σπίτι", storyDesc: "Οι πέτρες της ESTIA κουβαλούν περισσότερο από έναν αιώνα δουλειάς, εγκατάλειψης, επιμονής και αναγέννησης.", timeline1Year: "Γύρω στο 1920", timeline1Title: "Μια μικρή πέτρινη φάμπρικα", timeline1Text: "Το κτίριο δημιουργήθηκε ως μικρό τοπικό ελαιοτριβείο. Η μυλόπετρα, το πιεστήριο και τα πήλινα πιθάρια γέμιζαν τον χώρο, μαζί με τη χαρακτηριστική μυρωδιά της φρεσκοδουλεμένης ελιάς.", timeline2Year: "Για περίπου πενήντα χρόνια", timeline2Title: "Ένας τόπος δουλειάς και ζωής του χωριού", timeline2Text: "Εδώ παραγόταν ελαιόλαδο για τις οικογένειες της περιοχής. Το κτίριο δεν ήταν απλώς ένα εργαστήριο· αποτελούσε μέρος της καθημερινότητας και της μνήμης του τόπου.", timeline3Year: "Τα επόμενα χρόνια", timeline3Title: "Αποθήκη, εγκατάλειψη και σιωπή", timeline3Text: "Όταν άλλαξαν οι μέθοδοι παραγωγής, το ελαιοτριβείο σταμάτησε να λειτουργεί και χρησιμοποιήθηκε ως αποθήκη. Με τον χρόνο φθάρθηκε, εγκαταλείφθηκε και έφτασε κοντά στην κατάρρευση. Ένα από τα λίγα στοιχεία που έμειναν όρθια ήταν το μικρό του παράθυρο — ένα ήσυχο σημάδι ότι η ιστορία του δεν είχε τελειώσει.", timeline4Year: "Γύρω στο 2007", timeline4Title: "Αρχίζει η αποκατάσταση", timeline4Text: "Στόχος δεν ήταν να σβήσει το παρελθόν, αλλά να προστατευθεί. Οι παλιές πέτρες επαναχρησιμοποιήθηκαν, η αρχική μορφή σεβάστηκε και οι αλλαγές περιορίστηκαν όσο ήταν δυνατόν.", timeline5Year: "Σήμερα", timeline5Title: "Μια νέα ζωή ως ESTIA Stone House", timeline5Text: "Το παλιό ελαιοτριβείο υποδέχεται πλέον ανθρώπους ως σπίτι. Η χρήση του άλλαξε, όμως ο χαρακτήρας, οι πέτρες και ο δεσμός του με το χωριό παραμένουν.",
         nameLabel: "Το όνομα", nameTitle: "Γιατί το ονομάσαμε «ESTIA»", nameDesc: "Το όνομα επιλέχθηκε από τον πατέρα μας, τον Στέλιο. Κλείνει μέσα του την οικογένειά μας, αλλά και μία από τις παλαιότερες και πιο ζεστές έννοιες του ελληνικού πολιτισμού.", initialsTitle: "Τα αρχικά της οικογένειάς μας", initialsText: "Το ESTIA ενώνει τα ονόματα Stelios, Evgenia, Ioanna και Aria — τους ανθρώπους των οποίων οι μνήμες και η αγάπη έδωσαν μορφή στο σπίτι.", hestiaTitle: "Λίγη ελληνική μαγεία", hestiaText: "Στην αρχαία ελληνική παράδοση, η Εστία ήταν η θεά της εστίας, του σπιτιού και της οικογένειας. Η φλόγα στο κέντρο του σπιτιού συμβόλιζε τη ζεστασιά, την προστασία, τη συνέχεια και τη φιλοξενία. Αυτή η έννοια ταιριάζει απόλυτα εδώ: ένα παλιό κτίριο εργασίας που ξαναζωντάνεψε ως χώρος συνάντησης, ξεκούρασης και καλωσορίσματος.", familyTitle: "Ποιοι είμαστε", familyText1: "Είμαστε μια οικογένεια βαθιά δεμένη με το Μόδι, τους ανθρώπους και τις μνήμες του. Το σπίτι συνδέεται με τα παιδικά μας καλοκαίρια, με την ιστορία του πατέρα μας και με την επιθυμία μας να μη χαθεί ένα κομμάτι της οικογενειακής και τοπικής μας ιστορίας.", familyText2: "Περισσότερο από όλους, πίσω από αυτή την προσπάθεια στάθηκε ο πατέρας μας, ο Στέλιος. Με επιμονή, προσωπική εργασία και αγάπη για το κτίριο, έδωσε ξανά ζωή σε έναν χώρο που κάποτε έμοιαζε χαμένος. Για εμάς, η ESTIA είναι κάτι περισσότερο από κατάλυμα — είναι μια οικογενειακή μνήμη που πήρε ξανά μορφή.",
-        mapLabel: "Εξερεύνηση", mapTitle: "Ο τοπικός μας χάρτης", mapDesc: "Πατήστε ένα μέρος για να το δείτε στον χάρτη ή ανοίξτε το απευθείας στους Χάρτες Google για οδηγίες.", all: "Όλα", restaurant: "Φαγητό", beach: "Παραλίες", sight: "Αξιοθέατα", openMaps: "Άνοιγμα στους Χάρτες", here: "Βρίσκεστε εδώ",
+        mapLabel: "Εξερεύνηση", mapTitle: "Ο τοπικός μας χάρτης", mapDesc: "Πατήστε ένα μέρος για να το δείτε στον χάρτη OpenStreetMap ή ανοίξτε το στους Χάρτες Google για οδηγίες.", all: "Όλα", restaurant: "Φαγητό", beach: "Παραλίες", sight: "Αξιοθέατα", openMaps: "Άνοιγμα στους Χάρτες", here: "Βρίσκεστε εδώ",
         foodLabel: "Γεύσεις της Κρήτης", foodTitle: "Φαγητό & ταβέρνες", foodDesc: "Από θαλασσινά δίπλα στο κύμα μέχρι χαλαρή κρητική κουζίνα, αυτά τα μέρη είναι καλές αφετηρίες για να γνωρίσετε τις τοπικές γεύσεις.", beachLabel: "Η θάλασσα", beachTitle: "Παραλίες της Δυτικής Κρήτης", beachDesc: "Επιλέξτε μια εύκολη κοντινή βουτιά ή οργανώστε μια ολοήμερη εκδρομή σε μία από τις διάσημες λιμνοθάλασσες της Κρήτης.", sightLabel: "Πολιτισμός & φύση", sightTitle: "Μέρη για εξερεύνηση", sightDesc: "Παλιές πόλεις, μουσεία, μοναστήρια και ορεινά τοπία αποκαλύπτουν τις πολλές πλευρές των Χανίων και της Κρήτης.",
         tipsLabel: "Τοπικές συμβουλές", tipsTitle: "Μερικά μυστικά από εμάς", tipsDesc: "Μικρές λεπτομέρειες που μπορούν να κάνουν τις ημέρες σας στην Κρήτη πιο εύκολες και ευχάριστες.", footerMessage: "Έχετε απορίες κατά τη διαμονή σας; Στείλτε μας μήνυμα μέσω Airbnb — θα χαρούμε να βοηθήσουμε.", footerNote: "Οι χρόνοι διαδρομής είναι ενδεικτικοί. Ελέγξτε ωράρια, οδικές συνθήκες και πληροφορίες πρόσβασης πριν ξεκινήσετε.",
         categoryRestaurant: "Ταβέρνα", categoryBeach: "Παραλία", categorySight: "Αξιοθέατο", fromEstia: "από την ESTIA"
@@ -753,7 +779,7 @@
       document.getElementById("lang-el").classList.toggle("active", lang === "el");
       document.getElementById("lang-en").setAttribute("aria-pressed", String(lang === "en"));
       document.getElementById("lang-el").setAttribute("aria-pressed", String(lang === "el"));
-      try { localStorage.setItem("estia-language", lang); } catch (error) { /* Storage may be unavailable in some embedded browsers. */ }
+      localStorage.setItem("estia-language", lang);
       renderTabs();
       renderPlaceList();
       renderRecommendationCards();
@@ -838,52 +864,74 @@
       `).join("");
     }
 
-    function initMap() {
-      map = new google.maps.Map(document.getElementById("gmap"), {
-        center: {lat:35.48, lng:23.85},
-        zoom:10,
-        mapTypeControl:false,
-        streetViewControl:false,
-        fullscreenControl:true,
-        gestureHandling:"cooperative",
-        styles:[
-          {featureType:"all",elementType:"geometry",stylers:[{saturation:-18}]},
-          {featureType:"water",elementType:"geometry",stylers:[{color:"#b8d8e8"}]},
-          {featureType:"poi",elementType:"labels",stylers:[{visibility:"off"}]},
-          {featureType:"road",elementType:"geometry",stylers:[{color:"#e8dcc8"}]},
-          {featureType:"landscape",elementType:"geometry",stylers:[{color:"#f0e8d0"}]}
-        ]
+    function markerIcon(place) {
+      const isHome = place.type === "home";
+      const size = isHome ? 26 : 18;
+      return L.divIcon({
+        className: "estia-marker-wrapper",
+        html: `<span class="estia-marker ${isHome ? "home" : ""}" style="--marker-color:${place.color}">${isHome ? "⌂" : ""}</span>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size / 2],
+        popupAnchor: [0, -(size / 2)]
       });
-      markers = places.map((place,index) => {
-        const marker = new google.maps.Marker({
-          position:{lat:place.lat,lng:place.lng},
-          map,
-          title:localized(place.name),
-          zIndex:place.type === "home" ? 20 : 1,
-          icon:{
-            path:google.maps.SymbolPath.CIRCLE,
-            scale:place.type === "home" ? 11 : 8,
-            fillColor:place.color,
-            fillOpacity:1,
-            strokeColor:"#ffffff",
-            strokeWeight:2
-          }
+    }
+
+    function popupHtml(place) {
+      return `
+        <strong>${localized(place.name)}</strong>
+        <span>${localized(place.desc)}</span><br>
+        <a href="${mapsUrl(place)}" target="_blank" rel="noopener">↗ ${t("openMaps")}</a>
+      `;
+    }
+
+    function initMap() {
+      const mapElement = document.getElementById("gmap");
+      if (typeof L === "undefined") {
+        mapElement.innerHTML = `<div class="map-fallback">${currentLang === "el" ? "Ο χάρτης δεν μπόρεσε να φορτώσει. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο." : "The map could not load. Please check your internet connection."}</div>`;
+        return;
+      }
+
+      map = L.map("gmap", {
+        center: [35.48, 23.85],
+        zoom: 10,
+        scrollWheelZoom: false,
+        zoomControl: true,
+        attributionControl: true
+      });
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      markers = places.map((place, index) => {
+        const marker = L.marker([place.lat, place.lng], {
+          icon: markerIcon(place),
+          title: localized(place.name),
+          alt: localized(place.name),
+          keyboard: true,
+          riseOnHover: true
         });
-        marker.addListener("click", () => place.type === "home" ? map.panTo(marker.getPosition()) : selectPlace(index));
+        marker.bindPopup(popupHtml(place));
+        marker.on("click", () => selectPlace(index));
+        marker.addTo(map);
         return marker;
       });
+
       applyMarkerFilter();
+      fitVisibleMarkers();
+      setTimeout(() => map.invalidateSize(), 0);
     }
 
     function selectPlace(index) {
       selectedPlaceIndex = index;
       renderPlaceList();
       if (map) {
-        map.panTo({lat:places[index].lat,lng:places[index].lng});
-        map.setZoom(13);
+        map.setView([places[index].lat, places[index].lng], places[index].type === "home" ? 12 : 13, {animate: true});
+        if (markers[index] && map.hasLayer(markers[index])) markers[index].openPopup();
       }
       const selected = document.querySelector(`.place-card[data-index="${index}"]`);
-      if (selected) selected.scrollIntoView({behavior:"smooth",block:"nearest",inline:"nearest"});
+      if (selected) selected.scrollIntoView({behavior:"smooth", block:"nearest", inline:"nearest"});
     }
 
     function filterMap(filter) {
@@ -892,30 +940,48 @@
       renderTabs();
       renderPlaceList();
       applyMarkerFilter();
-      if (map) { map.setCenter({lat:35.48,lng:23.85}); map.setZoom(10); }
+      fitVisibleMarkers();
     }
 
     function applyMarkerFilter() {
-      if (!markers.length) return;
-      markers.forEach((marker,index) => {
+      if (!map || !markers.length) return;
+      markers.forEach((marker, index) => {
         const place = places[index];
-        marker.setVisible(place.type === "home" || currentFilter === "all" || place.type === currentFilter);
+        const show = place.type === "home" || currentFilter === "all" || place.type === currentFilter;
+        if (show && !map.hasLayer(marker)) marker.addTo(map);
+        if (!show && map.hasLayer(marker)) map.removeLayer(marker);
       });
     }
 
+    function fitVisibleMarkers() {
+      if (!map) return;
+      const points = places
+        .filter(place => place.type === "home" || currentFilter === "all" || place.type === currentFilter)
+        .map(place => [place.lat, place.lng]);
+      if (points.length) map.fitBounds(points, {padding: [24, 24], maxZoom: 11});
+    }
+
     function refreshMarkerTitles() {
-      markers.forEach((marker,index) => marker.setTitle(localized(places[index].name)));
+      markers.forEach((marker, index) => {
+        const label = localized(places[index].name);
+        marker.options.title = label;
+        marker.options.alt = label;
+        marker.setPopupContent(popupHtml(places[index]));
+        const element = marker.getElement();
+        if (element) {
+          element.title = label;
+          element.setAttribute("aria-label", label);
+        }
+      });
     }
 
     document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
     document.getElementById("lang-el").addEventListener("click", () => setLanguage("el"));
 
-    let storedLanguage = null;
-    try { storedLanguage = localStorage.getItem("estia-language"); } catch (error) { /* Use browser language when storage is unavailable. */ }
+    const storedLanguage = localStorage.getItem("estia-language");
     const browserLanguage = navigator.language && navigator.language.toLowerCase().startsWith("el") ? "el" : "en";
     setLanguage(storedLanguage === "el" || storedLanguage === "en" ? storedLanguage : browserLanguage);
-    window.initMap = initMap;
+    initMap();
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZk7wrMGyEf4iePIDY1F0c_sNBi3VYgQc=initMap"></script>
 </body>
 </html>
